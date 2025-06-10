@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS</title>
+    <script>
+        window.onload = inicio;
+
+        function inicio() {
+            let situa = document.getElementById('situacao1');
+            // mudar para change
+            situa.addEventListener('click', valor);
+        }
+        function valor() {
+            let campo = document.getElementById('situacao1');
+            console.log(`Valor: ${campo.value}`);
+         }
+    </script>
+</head>
+<body>
+    <select id="situacao1">
+        <option value="inicio">Aguardando</option>
+        <option value="atribuida">Em andamento</option>
+        <option value="parada">Pausada</option>
+        <option value="rejeitada">Rejeitada</option>
+        <option value="fim">Concluída</option>
+    </select>
+    <label for="situacao1" id="rotulo1">Instalar impressora RH</label>
+</body>
+</html>
