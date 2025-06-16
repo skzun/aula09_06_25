@@ -6,50 +6,41 @@
     <title>JS</title>
     <script>
         window.onload = inicio;
-        let contador = 1;
 
         function inicio() {
-            let botao = document.getElementById('btnAdiciona');
-            botao.addEventListener('click', adiciona);
+            let botao = document.getElementById('check');
+            botao.addEventListener('click', valor);
         }
-        function adiciona() {
-            let campoNome = document.getElementById('nome');
-            let nomeAtividade = campoNome.value;
 
-            let atividades = document.getElementById('atividades');
-            atividades.innerHTML += `<input type="checkbox" id="c${contador}">`;
-            atividades.innerHTML += `<label id="labelc${contador}" for="c${contador}"> ${nomeAtividade}</label>`;
-            atividades.innerHTML += '<br>';
-            contador++;
+        function valor() {
+            let campo = document.getElementById('check');
+            console.log(`Valor: ${campo.value}`);
+            console.log(`Apertado: ${campo.checked}`);
 
-            let ultima = document.getElementById('c1');
-            ultima.addEventListener('click', encerrou);
-         }
+            if (campo.checked) {
+                let agora = new Date();
+                let nomeTarefa = "Verificar"; 
+                let data = `${agora.getDate()}/${agora.getMonth() + 1}/${agora.getFullYear()} ${agora.getHours()}:${agora.getMinutes()}`;
 
-         function encerrou(evento) {
-            
-            let clicado = evento.srcElement.id;
-            let labelDoClicado = document.getElementById('label'+clicado);
-            let texto = labelDoClicado.innerHTML;
-            console.log(texto);
-
-            let agora = new Date();
-            let textoData = `${agora.getDate()}/${agora.getMonth()+1}/${agora.getFullYear()} ${agora.getHours()}:${agora.getMinutes()}`
-
-            let tabela = document.getElementById('encerradas');
-            tabela.innerHTML += `<tr><td>Nome</td><td>${textoData}</td></tr>`;
-         }
+                let tabela = document.getElementById("tabela");
+                let novaLinha = tabela.insertRow(-1);
+                let celula1 = novaLinha.insertCell(0);
+                let celula2 = novaLinha.insertCell(1);
+                celula1.innerText = nomeTarefa;
+                celula2.innerText = data;
+            }
+        }
     </script>
 </head>
 <body>
-    <label for="nome">Atividade:</label>
-    <input type="text" id="nome">
-    <input type="button" id="btnAdiciona" value="Adicionar"><br>
+    <input type="checkbox" id="check"><label for="check">Verificar</label>
 
-    <div id="atividades"></div>
-
-    <table id="encerradas" border="1px">
-        <tr><th>Nome</th><th>Data encerramento</th></tr>
+    <h2>Tarefas Encerradas</h2>
+    <table border="1" id="tabela">
+        <tr>
+            <th>Nome da Tarefa</th>
+            <th>Data de Encerramento</th>
+        </tr>
     </table>
 </body>
-</html>  
+</html>
