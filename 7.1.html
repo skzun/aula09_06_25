@@ -4,21 +4,92 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JS</title>
+    <style>
+        #rotulo1 {
+            padding: 5px;
+            display: inline-block;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            padding: 5px 10px;
+        }
+    </style>
     <script>
         window.onload = inicio;
 
         function inicio() {
             let situa = document.getElementById('situacao1');
-            // mudar para change
-            situa.addEventListener('click', valor);
+            situa.addEventListener('change', valor);
+
+            document.getElementById('btnAdicionar').addEventListener('click', adicionarTarefa);
         }
+
+        let nomeTarefaAtual = '';
+
         function valor() {
             let campo = document.getElementById('situacao1');
             console.log(`Valor: ${campo.value}`);
-         }
+
+            let rotulo = document.getElementById('rotulo1');
+
+            if (campo.value === 'atribuida') {
+                rotulo.style.backgroundColor = 'lightgreen';
+            } else if (campo.value === 'parada') {
+                rotulo.style.backgroundColor = 'yellow';
+            } else if (campo.value === 'rejeitada') {
+                rotulo.style.backgroundColor = 'lightcoral';
+            } else {
+                rotulo.style.backgroundColor = '';
+            }
+
+            if (campo.value === 'fim' && nomeTarefaAtual !== '') {
+                let tabela = document.getElementById('tabelaTarefas');
+                let novaLinha = tabela.insertRow();
+
+                let celulaNome = novaLinha.insertCell(0);
+                let celulaData = novaLinha.insertCell(1);
+
+                let dataAtual = new Date().toLocaleDateString();
+
+                celulaNome.textContent = nomeTarefaAtual;
+                celulaData.textContent = dataAtual;
+
+                nomeTarefaAtual = '';
+                document.getElementById('rotulo1').textContent = 'Instalar impressora RH';
+                document.getElementById('novaTarefa').value = '';
+            }
+        }
+
+        function adicionarTarefa() {
+            let input = document.getElementById('novaTarefa');
+            let rotulo = document.getElementById('rotulo1');
+
+            if (input.value.trim() === '') {
+                alert('Digite uma tarefa válida.');
+                return;
+            }
+
+            nomeTarefaAtual = input.value.trim();
+            rotulo.textContent = nomeTarefaAtual;
+
+            document.getElementById('situacao1').value = 'inicio';
+            rotulo.style.backgroundColor = '';
+        }
     </script>
 </head>
 <body>
+
+    <input type="text" id="novaTarefa" placeholder="Digite o nome da tarefa">
+    <button id="btnAdicionar">Adicionar Tarefa</button>
+
+    <br><br>
+
     <select id="situacao1">
         <option value="inicio">Aguardando</option>
         <option value="atribuida">Em andamento</option>
@@ -27,5 +98,14 @@
         <option value="fim">Concluída</option>
     </select>
     <label for="situacao1" id="rotulo1">Instalar impressora RH</label>
+
+    <h3>Tarefas Concluídas</h3>
+    <table id="tabelaTarefas">
+        <tr>
+            <th>Tarefa</th>
+            <th>Data de Conclusão</th>
+        </tr>
+    </table>
+
 </body>
 </html>
